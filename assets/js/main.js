@@ -1,1 +1,46 @@
-const menuBtn=document.querySelector('[data-menu-btn]');const menu=document.querySelector('[data-mobile-menu]');if(menuBtn&&menu){menuBtn.addEventListener('click',()=>menu.classList.toggle('open'))}const reveals=document.querySelectorAll('.reveal');const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})},{threshold:.12});reveals.forEach(el=>io.observe(el));const path=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('[data-link]').forEach(a=>{if(a.getAttribute('href')===path)a.classList.add('active')});document.querySelectorAll('[data-tilt]').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=e.clientX-r.left;const y=e.clientY-r.top;card.style.transform=`perspective(900px) rotateX(${((y/r.height)-.5)*-8}deg) rotateY(${((x/r.width)-.5)*8}deg) translateY(-8px)`});card.addEventListener('mouseleave',()=>card.style.transform='')});
+const menuBtn = document.querySelector('[data-menu-btn]');
+const menu = document.querySelector('[data-mobile-menu]');
+
+if (menuBtn && menu) {
+  menuBtn.addEventListener('click', () => {
+    menu.classList.toggle('open');
+  });
+}
+const revealElements = document.querySelectorAll('.reveal');
+const revealOptions = {
+  threshold: 0.12
+};
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, revealOptions);
+revealElements.forEach(el => revealObserver.observe(el));
+const currentPath = location.pathname.split('/').pop() || 'index.html';
+const navLinks = document.querySelectorAll('[data-link]');
+navLinks.forEach(link => {
+  if (link.getAttribute('href') === currentPath) {
+    link.classList.add('active');
+  }
+});
+const tiltCards = document.querySelectorAll('[data-tilt]');
+tiltCards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y / rect.height) - 0.5) * -8;
+    const rotateY = ((x / rect.width) - 0.5) * 8;
+    card.style.transform = `
+      perspective(900px) 
+      rotateX(${rotateX}deg) 
+      rotateY(${rotateY}deg) 
+      translateY(-8px)
+    `;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
