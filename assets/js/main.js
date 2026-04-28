@@ -44,7 +44,7 @@ tiltCards.forEach(card => {
     card.style.transform = '';
   });
 });
-const birthday = new Date("2003-05-20T00:00:00"); // change this
+const birthday = new Date("2005-12-17T14:00:00"); // change this
 
 const formats = ["years", "months", "days", "hours", "minutes", "seconds"];
 let currentFormatIndex = 0;
