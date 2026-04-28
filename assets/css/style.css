@@ -234,3 +234,29 @@ body {
   font-size: 13px;
   color: #a7a0bd;
 }
+.hire-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.datetime {
+  color: #ccc;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.datetime .divider {
+  color: #666;
+}
+
+.hire-btn {
+  background: linear-gradient(45deg, #a855f7, #ec4899);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+}

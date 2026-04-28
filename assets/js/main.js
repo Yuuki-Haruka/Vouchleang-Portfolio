@@ -1,22 +1,18 @@
 const menuBtn = document.querySelector('[data-menu-btn]');
 const menu = document.querySelector('[data-mobile-menu]');
-
 if (menuBtn && menu) {
   menuBtn.addEventListener('click', () => {
     menu.classList.toggle('open');
   });
 }
 const revealElements = document.querySelectorAll('.reveal');
-const revealOptions = {
-  threshold: 0.12
-};
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('show');
     }
   });
-}, revealOptions);
+}, { threshold: 0.12 });
 revealElements.forEach(el => revealObserver.observe(el));
 const currentPath = location.pathname.split('/').pop() || 'index.html';
 const navLinks = document.querySelectorAll('[data-link]');
@@ -44,44 +40,45 @@ tiltCards.forEach(card => {
     card.style.transform = '';
   });
 });
-const birthday = new Date("2005-12-17T14:00:00"); // change this
-
+const birthday = new Date("2005-12-17T14:00:00");
 const formats = ["years", "months", "days", "hours", "minutes", "seconds"];
 let currentFormatIndex = 0;
-
 const ageDisplay = document.getElementById("ageDisplay");
 const ageBox = document.querySelector(".age-counter");
-
 function updateAge() {
+  if (!ageDisplay) return; 
   const now = new Date();
   const diff = now - birthday;
   const format = formats[currentFormatIndex];
-
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
   const months = Math.floor(days / 30.4375);
   const years = Math.floor(days / 365.2425);
-
-  const values = {
-    years,
-    months,
-    days,
-    hours,
-    minutes,
-    seconds
-  };
-
+  const values = { years, months, days, hours, minutes, seconds };
   ageDisplay.textContent = `${values[format].toLocaleString()} ${format}`;
 }
-
-// click to switch
-ageBox.addEventListener("click", () => {
-  currentFormatIndex = (currentFormatIndex + 1) % formats.length;
-  updateAge();
-});
-
-// run
+if (ageBox) {
+  ageBox.addEventListener("click", () => {
+    currentFormatIndex = (currentFormatIndex + 1) % formats.length;
+    updateAge();
+  });
+}
 updateAge();
 setInterval(updateAge, 1000);
+function updateDateTime() {
+  const timeEl = document.getElementById("time");
+  const dateEl = document.getElementById("date");
+  if (!timeEl || !dateEl) return;
+  const now = new Date();
+  timeEl.textContent = now.toLocaleTimeString();
+  dateEl.textContent = now.toLocaleDateString(undefined, {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+}
+updateDateTime();
+setInterval(updateDateTime, 1000);
