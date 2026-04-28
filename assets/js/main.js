@@ -44,3 +44,44 @@ tiltCards.forEach(card => {
     card.style.transform = '';
   });
 });
+const birthday = new Date("2003-05-20T00:00:00"); // change this
+
+const formats = ["years", "months", "days", "hours", "minutes", "seconds"];
+let currentFormatIndex = 0;
+
+const ageDisplay = document.getElementById("ageDisplay");
+const ageBox = document.querySelector(".age-counter");
+
+function updateAge() {
+  const now = new Date();
+  const diff = now - birthday;
+  const format = formats[currentFormatIndex];
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const months = Math.floor(days / 30.4375);
+  const years = Math.floor(days / 365.2425);
+
+  const values = {
+    years,
+    months,
+    days,
+    hours,
+    minutes,
+    seconds
+  };
+
+  ageDisplay.textContent = `${values[format].toLocaleString()} ${format}`;
+}
+
+// click to switch
+ageBox.addEventListener("click", () => {
+  currentFormatIndex = (currentFormatIndex + 1) % formats.length;
+  updateAge();
+});
+
+// run
+updateAge();
+setInterval(updateAge, 1000);
